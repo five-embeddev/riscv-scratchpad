@@ -8,6 +8,7 @@ project(test C)
 set ( CMAKE_C_FLAGS "-Os -g -Wall -ffunction-sections")
 set ( STACK_SIZE 0xf00 )
 set ( TARGET test )
+set ( SRC_MODULES test startup dummy)
 
 # add the executable
 
@@ -31,7 +32,7 @@ add_custom_command(TARGET ${TARGET}.elf POST_BUILD
         COMMENT "Invoking: Hexdump")
 
 # Pre-processing command to create disassembly for each source file
-foreach (SRC_MODULE test startup dummy)
+foreach (SRC_MODULE ${SRC_MODULES})
   add_custom_command(TARGET ${TARGET}.elf 
                      PRE_LINK
                      COMMAND ${CMAKE_OBJDUMP} -S CMakeFiles/${TARGET}.elf.dir/${SRC_MODULE}.c.obj > ${SRC_MODULE}.s

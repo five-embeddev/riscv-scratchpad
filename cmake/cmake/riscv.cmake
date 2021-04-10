@@ -1,4 +1,4 @@
-include(CMakeForceCompiler)
+#include(CMakeForceCompiler)
 
 # usage
 # cmake -DCMAKE_TOOLCHAIN_FILE=../cmake/rv32imac.cmake ../
@@ -46,9 +46,13 @@ set( CMAKE_EXECUTABLE_SUFFIX    ".elf")
 # specify the cross compiler. We force the compiler so that CMake doesn't
 # attempt to build a simple test program as this will fail without us using
 # the -nostartfiles option on the command line
-CMAKE_FORCE_C_COMPILER( "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}gcc${RISCV_TOOLCHAIN_BIN_EXT}" GNU )
-CMAKE_FORCE_CXX_COMPILER( "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}g++${RISCV_TOOLCHAIN_BIN_EXT}" GNU )
-SET( CMAKE_ASM_COMPILER "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}gcc" )
+#CMAKE_FORCE_C_COMPILER( "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}gcc${RISCV_TOOLCHAIN_BIN_EXT}" GNU )
+#CMAKE_FORCE_CXX_COMPILER( "${RISCV_TOOLCHAIN_BIN_PATH}/${CROSS_COMPILE}g++${RISCV_TOOLCHAIN_BIN_EXT}" GNU )
+set(CMAKE_ASM_COMPILER {CROSS_COMPILE}gcc )
+set(CMAKE_AR ${CROSS_COMPILE}ar)
+set(CMAKE_ASM_COMPILER ${CROSS_COMPILE}gcc)
+set(CMAKE_C_COMPILER ${CROSS_COMPILE}gcc)
+set(CMAKE_CXX_COMPILER ${CROSS_COMPILE}g++)
 
 # We must set the OBJCOPY setting into cache so that it's available to the
 # whole project. Otherwise, this does not get set into the CACHE and therefore
@@ -69,3 +73,4 @@ set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" )
 set( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" )
 set( CMAKE_ASM_FLAGS "${CMAKE_C_FLAGS}" CACHE STRING "" )
 set( CMAKE_EXE_LINKER_FLAGS   "${CMAKE_EXE_LINKER_FLAGS}  -march=${CMAKE_SYSTEM_PROCESSOR}    -nostartfiles   " )
+
