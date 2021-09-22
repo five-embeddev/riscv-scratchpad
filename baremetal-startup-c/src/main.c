@@ -8,9 +8,7 @@
    dependencies to any particular implementation.
    
 */
-
 // RISC-V CSR definitions and access classes
-// Download: wget https://raw.githubusercontent.com/five-embeddev/riscv-csr-access/master/include/riscv-csr.h
 #include "riscv-csr.h"
 #include "riscv-interrupts.h"
 #include "timer.h"
@@ -23,12 +21,12 @@ static volatile uint64_t timestamp = 0;
 
 int main(void) {
     // Global interrupt disable
-    CSR_CLR_BITS_IMM_MSTATUS(MSTATUS_MIE_BIT_MASK);
+    csr_clr_bits_mstatus(MSTATUS_MIE_BIT_MASK);
+    csr_write_mie(0);
 
     // Setup timer for 1 second interval
     timestamp = mtimer_get_raw_time();
     mtimer_set_raw_time_cmp(MTIMER_SECONDS_TO_CLOCKS(1));
-    
     
     // Setup the IRQ handler entry point
     csr_write_mtvec((uint_xlen_t) irq_entry);
@@ -37,7 +35,7 @@ int main(void) {
     csr_set_bits_mie(MIE_MTI_BIT_MASK);
 
     // Global interrupt enable 
-    CSR_SET_BITS_IMM_MSTATUS(MSTATUS_MIE_BIT_MASK);
+    csr_set_bits_mstatus(MSTATUS_MIE_BIT_MASK);
 
     // Busy loop
     do {

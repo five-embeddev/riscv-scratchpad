@@ -43,6 +43,11 @@ OPENOCD_PATH=/c/toolchain/xpack-openocd-0.10.0-15
 OPENOCD_CFG=${OPENOCD_PATH}/scripts/board/sifive-hifive1-revb.cfg
 OPENOCD=${OPENOCD_PATH}/bin/openocd
 
+help:
+	@echo "upload - use ${JLINK_DOT_EXE} to upload ${OUTPUT_FILE}"
+	@echo "openocd - Start the OpenOCD server"
+	@echo "debug - Start a gdb instance"
+
 upload : build/upload.cmd
 	${JLINK_FULL_PATH} \
 		${JLINK_UPLOADER_FLAGS} \
@@ -57,6 +62,9 @@ openocd : ${OPENOCD_CFG}
 	start ${OPENOCD} \
 		-f ${OPENOCD_CFG} \
 		-l openocd.log  2>&1 > /dev/null
+
+openocd-cli : ${OPENOCD_CFG}
+	telnet 127.0.0.1 4444
 
 # Upload command
 build/upload.cmd :

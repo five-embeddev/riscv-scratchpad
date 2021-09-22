@@ -15,9 +15,9 @@
 // https://gcc.gnu.org/onlinedocs/gcc/RISC-V-Function-Attributes.html#RISC-V-Function-Attributes
 
 // Vector table - not to be called.
-void riscv_mtvec_table(void)  __attribute__ ((naked));
-void riscv_stvec_table(void)  __attribute__ ((naked));
-void riscv_utvec_table(void)  __attribute__ ((naked));
+void riscv_mtvec_table(void)  __attribute__ ((naked, section(".text.mtvec_table") ,aligned(256)));
+void riscv_stvec_table(void)  __attribute__ ((naked, section(".text.stvec_table") ,aligned(256)));
+void riscv_utvec_table(void)  __attribute__ ((naked, section(".text.utvec_table") ,aligned(256)));
 
 // Default "NOP" implementations
 static void riscv_nop_machine(void)    __attribute__ ((interrupt ("machine")) );
@@ -33,7 +33,7 @@ void riscv_mtvec_ssi(void) __attribute__ ((interrupt ("supervisor")  , weak, ali
 void riscv_mtvec_sti(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_machine") ));
 void riscv_mtvec_sei(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_machine") ));
 
-void riscv_stvec_exception(void) __attribute__ ((interrupt ("machine")     , weak, alias("riscv_nop_supervisor") )); 
+void riscv_stvec_exception(void) __attribute__ ((interrupt ("supervisor")     , weak, alias("riscv_nop_supervisor") )); 
 void riscv_stvec_ssi(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_supervisor") ));
 void riscv_stvec_sti(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_supervisor") ));
 void riscv_stvec_sei(void) __attribute__ ((interrupt ("supervisor")  , weak, alias("riscv_nop_supervisor") ));
@@ -41,6 +41,27 @@ void riscv_stvec_sei(void) __attribute__ ((interrupt ("supervisor")  , weak, ali
 void riscv_utvec_usi(void) __attribute__ ((interrupt ("user")        , weak, alias("riscv_nop_user") ));
 void riscv_utvec_uti(void) __attribute__ ((interrupt ("user")        , weak, alias("riscv_nop_user") ));
 void riscv_utvec_uei(void) __attribute__ ((interrupt ("user")        , weak, alias("riscv_nop_user") ));
+
+#ifndef VECTOR_TABLE_MTVEC_PLATFORM_INTS
+
+void riscv_mtvec_platform_irq0(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq1(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq2(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq3(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq4(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq5(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq6(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq7(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq8(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq9(void)  __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq10(void) __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq11(void) __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq12(void) __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq13(void) __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq14(void) __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+void riscv_mtvec_platform_irq15(void) __attribute__ ((interrupt ("machine"), weak, alias("riscv_nop_machine") ));
+
+#endif // #ifndef VECTOR_TABLE_MTVEC_PLATFORM_INTS
 
 #pragma GCC push_options
 
@@ -58,21 +79,39 @@ void riscv_utvec_uei(void) __attribute__ ((interrupt ("user")        , weak, ali
 // disabled or delegated to user mode.
 void riscv_mtvec_table(void) {
     __asm__ volatile (
-        ".align 16;"
-        ".org  0*4;"
+        ".org  riscv_mtvec_table + 0*4;"
         "jal   zero,riscv_mtvec_exception;"  /* 0  */   
-        ".org  1*4;"
+        ".org  riscv_mtvec_table + 1*4;"
         "jal   zero,riscv_mtvec_ssi;"  /* 1  */   
-        ".org 3*4;"
+        ".org  riscv_mtvec_table + 3*4;"
         "jal   zero,riscv_mtvec_msi;"  /* 3  */   
-        ".org  5*4;"
+        ".org  riscv_mtvec_table + 5*4;"
         "jal   zero,riscv_mtvec_sti;"  /* 5  */   
-        ".org  7*4;"
+        ".org  riscv_mtvec_table + 7*4;"
         "jal   zero,riscv_mtvec_mti;"  /* 7  */   
-        ".org  9*4;"
+        ".org  riscv_mtvec_table + 9*4;"
         "jal   zero,riscv_mtvec_sei;"  /* 9  */   
-        ".org  11*4;"
+        ".org  riscv_mtvec_table + 11*4;"
         "jal   zero,riscv_mtvec_mei;"  /* 11 */   
+#ifndef VECTOR_TABLE_MTVEC_PLATFORM_INTS
+        ".org  riscv_mtvec_table + 16*4;"
+        "jal   riscv_mtvec_platform_irq0;"
+        "jal   riscv_mtvec_platform_irq1;"
+        "jal   riscv_mtvec_platform_irq2;"
+        "jal   riscv_mtvec_platform_irq3;"
+        "jal   riscv_mtvec_platform_irq4;"
+        "jal   riscv_mtvec_platform_irq5;"
+        "jal   riscv_mtvec_platform_irq6;"
+        "jal   riscv_mtvec_platform_irq7;"
+        "jal   riscv_mtvec_platform_irq8;"
+        "jal   riscv_mtvec_platform_irq9;"
+        "jal   riscv_mtvec_platform_irq10;"
+        "jal   riscv_mtvec_platform_irq11;"
+        "jal   riscv_mtvec_platform_irq12;"
+        "jal   riscv_mtvec_platform_irq13;"
+        "jal   riscv_mtvec_platform_irq14;"
+        "jal   riscv_mtvec_platform_irq15;"
+#endif
         : /* output: none */                    
         : /* input : immediate */               
         : /* clobbers: none */
@@ -83,13 +122,14 @@ void riscv_mtvec_table(void) {
 // http://five-embeddev.com/riscv-isa-manual/latest/supervisor.html#sec:scause
 void riscv_stvec_table(void) {
     __asm__ volatile (                          
-        ".align 16;"
-        ".org  1*4;"
-        "jal   zero,riscv_mtvec_ssi;"  /* 1  */   
-        ".org  5*4;"
-        "jal   zero,riscv_mtvec_sti;"  /* 5  */   
-        ".org  9*4;"
-        "jal   zero,riscv_mtvec_sei;"  /* 9  */   
+        ".org  riscv_stvec_table + 0*4;"
+        "jal   zero,riscv_stvec_exception;"  /* 0  */   
+        ".org  riscv_stvec_table + 1*4;"
+        "jal   zero,riscv_stvec_ssi;"  /* 1  */   
+        ".org  riscv_stvec_table + 5*4;"
+        "jal   zero,riscv_stvec_sti;"  /* 5  */   
+        ".org  riscv_stvec_table + 9*4;"
+        "jal   zero,riscv_stvec_sei;"  /* 9  */   
         : /* output: none */                    
         : /* input : immediate */               
         : /* clobbers: none */
@@ -98,12 +138,11 @@ void riscv_stvec_table(void) {
 // Vector table. Do not call!
 void riscv_utvec_table(void) {
     __asm__ volatile (                          
-        ".align 16;"
-        ".org  0*4;"
+        ".org  riscv_utvec_table + 0*4;"
         "jal   zero,riscv_utvec_usi;"  /* 0  */   
-        ".org 4*4;"
+        ".org  riscv_utvec_table + 4*4;"
         "jal   zero,riscv_utvec_uti;"  /* 4  */   
-        ".org  8*4;"
+        ".org  riscv_utvec_table + 8*4;"
         "jal   zero,riscv_utvec_uei;"  /* 8  */   
         : /* output: none */                    
         : /* input : immediate */               
