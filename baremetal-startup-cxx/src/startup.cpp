@@ -2,7 +2,7 @@
    Simple C++ startup routine to setup CRT
    SPDX-License-Identifier: Unlicense
 
-   https://five-embeddev.com/
+   (https://five-embeddev.com/ | http://www.shincbm.com/) 
 
 */
 
@@ -43,12 +43,19 @@ extern int main(void);
 void _enter(void)   {
     // Setup SP and GP
     // The locations are defined in the linker script
-    __asm__ volatile  ("la    gp, __global_pointer$;"
-                      "la    sp, _sp;"
-                      "jal   zero, _start;"
-                      :  /* output: none %0 */
-                      : /* input: none */
-                      : /* clobbers: none */); 
+    __asm__ volatile  (
+        ".option push;"
+        // The 'norelax' option is critical here.
+        // Without 'norelax' the global pointer will
+        // be loaded relative to the global pointer!
+        ".option norelax;"
+        "la    gp, __global_pointer$;"
+        ".option pop;"
+        "la    sp, _sp;"
+        "jal   zero, _start;"
+        :  /* output: none %0 */
+        : /* input: none */
+        : /* clobbers: none */); 
     // This point will not be executed, _start() will be called with no return.
 }
 
@@ -61,13 +68,13 @@ void _start(void) {
               &metal_segment_bss_target_end,
               0U);
     // Initialize the .data section (global variables with initial values)
-    std::copy(&metal_segment_data_target_start, // cppcheck-suppress mismatchingContainers
-              &metal_segment_data_target_end,
-              &metal_segment_data_source_start);
+    std::copy(&metal_segment_data_source_start, // cppcheck-suppress mismatchingContainers
+              &metal_segment_data_source_start + (&metal_segment_data_target_end-&metal_segment_data_target_start),
+              &metal_segment_data_target_start);
     // Initialize the .itim section (code moved from flash to SRAM to improve performance)
-    std::copy(&metal_segment_itim_target_start, // cppcheck-suppress mismatchingContainers
-              &metal_segment_itim_target_end,
-              &metal_segment_itim_source_start);
+    std::copy(&metal_segment_itim_source_start, // cppcheck-suppress mismatchingContainers
+              &metal_segment_itim_source_start + (&metal_segment_itim_target_end - &metal_segment_itim_target_start),
+              &metal_segment_itim_target_start);
 
     // Call constructors
     std::for_each( __init_array_start,

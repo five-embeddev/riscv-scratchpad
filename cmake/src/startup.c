@@ -17,12 +17,19 @@ extern int main(void);
 void _enter(void) {
     // Setup SP and GP
     // The locations are defined in the linker script
-    __asm__ volatile  ("la    gp, __global_pointer$;"
-                      "la    sp, _sp;"
-                      "jal   zero, _start;"
-                      :  /* output: none %0 */
-                      : /* input: none */
-                      : /* clobbers: none */); 
+    __asm__ volatile  (
+        ".option push;"
+        // The 'norelax' option is critical here.
+        // Without 'norelax' the global pointer will
+        // be loaded relative to the global pointer!
+        ".option norelax;"
+        "la    gp, __global_pointer$;"
+        ".option pop;"
+        "la    sp, _sp;"
+        "jal   zero, _start;"
+        :  /* output: none %0 */
+        : /* input: none */
+        : /* clobbers: none */); 
     // This point will not be executed, _start() will be called with no return.
 }
 
