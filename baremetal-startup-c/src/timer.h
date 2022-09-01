@@ -14,10 +14,19 @@
 #define RISCV_MTIMECMP_ADDR (0x2000000 + 0x4000)
 #define RISCV_MTIME_ADDR    (0x2000000 + 0xBFF8)
 
+#ifndef MTIME_FREQ_HZ
+// Timer for HiFive board
 #define MTIME_FREQ_HZ 32768
+#endif
 
 #define MTIMER_SECONDS_TO_CLOCKS(SEC)           \
     ((uint64_t)(((SEC)*(MTIME_FREQ_HZ))))
+
+#define MTIMER_MSEC_TO_CLOCKS(MSEC)           \
+    ((uint64_t)(((MSEC)*(MTIME_FREQ_HZ))/1000))
+
+#define MTIMER_USEC_TO_CLOCKS(USEC)           \
+    ((uint64_t)(((USEC)*(MTIME_FREQ_HZ))/1000000))
 
 /** Set the raw time compare point in system timer clocks.
  * @param clock_offset Time relative to current mtime when 

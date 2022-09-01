@@ -7,6 +7,9 @@
 # https://xpack.github.io/riscv-none-embed-gcc/
 FIND_FILE( RISCV_XPACK_GCC_COMPILER_EXE "riscv-none-embed-gcc.exe" PATHS ENV INCLUDE)
 FIND_FILE( RISCV_XPACK_GCC_COMPILER "riscv-none-embed-gcc" PATHS ENV INCLUDE)
+# New versions of xpack
+FIND_FILE( RISCV_XPACK_NEW_GCC_COMPILER_EXE "riscv-none-elf-gcc.exe" PATHS ENV INCLUDE)
+FIND_FILE( RISCV_XPACK_NEW_GCC_COMPILER "riscv-none-elf-gcc" PATHS ENV INCLUDE)
 
 # Look for RISC-V github GCC
 # https://github.com/riscv/riscv-gnu-toolchain
@@ -14,7 +17,11 @@ FIND_FILE( RISCV_XPACK_GCC_COMPILER_EXT "riscv32-unknown-elf-gcc.exe" PATHS ENV 
 FIND_FILE( RISCV_XPACK_GCC_COMPILER "riscv32-unknown-elf-gcc" PATHS ENV INCLUDE)
 
 # Select which is found
-if (EXISTS ${RISCV_XPACK_GCC_COMPILER})
+if (EXISTS ${RISCV_XPACK_NEW_GCC_COMPILER})
+set( RISCV_GCC_COMPILER ${RISCV_XPACK_NEW_GCC_COMPILER})
+elseif (EXISTS ${RISCV_XPACK_GCC_NEW_COMPILER_EXE})
+set( RISCV_GCC_COMPILER ${RISCV_XPACK_NEW_GCC_COMPILER_EXE})
+elseif (EXISTS ${RISCV_XPACK_GCC_COMPILER})
 set( RISCV_GCC_COMPILER ${RISCV_XPACK_GCC_COMPILER})
 elseif (EXISTS ${RISCV_XPACK_GCC_COMPILER_EXE})
 set( RISCV_GCC_COMPILER ${RISCV_XPACK_GCC_COMPILER_EXE})
@@ -40,7 +47,7 @@ message( "RISC-V Cross Compile: ${CROSS_COMPILE}" )
 # The Generic system name is used for embedded targets (targets without OS) in
 # CMake
 set( CMAKE_SYSTEM_NAME          Generic )
-set( CMAKE_SYSTEM_PROCESSOR     rv32imac )
+set( CMAKE_SYSTEM_PROCESSOR     rv32imac_zicsr )
 set( CMAKE_EXECUTABLE_SUFFIX    ".elf")
 
 # specify the cross compiler. We force the compiler so that CMake doesn't

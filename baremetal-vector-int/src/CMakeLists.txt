@@ -6,6 +6,7 @@ project(baremetal_vector_int C)
 
 # specify the C standard
 set(CMAKE_C_FLAGS "\
+  -march=${CMAKE_SYSTEM_PROCESSOR} \
   -std=c99 \
   -Os \
   -g \

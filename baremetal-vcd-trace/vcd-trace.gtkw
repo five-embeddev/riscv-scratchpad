@@ -1,0 +1,57 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Thu Sep  1 13:00:26 2022
+[*]
+[dumpfile] "/home/five/five-embeddev-wsl/riscv-scratchpad-dev/baremetal-vcd-trace/vcd-trace.fst"
+[dumpfile_mtime] "Wed Aug 31 14:05:37 2022"
+[dumpfile_size] 42838
+[savefile] "/home/five/five-embeddev-wsl/riscv-scratchpad-dev/baremetal-vcd-trace/vcd-trace.gtkw"
+[timestart] 0
+[size] 1920 994
+[pos] 98288 98288
+*-11.164247 12600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] riscv_isa_sim.
+[treeopen] riscv_isa_sim.core0.
+[sst_width] 276
+[signals_width] 288
+[sst_expanded] 1
+[sst_vpaned_height] 296
+@200
+-Global Vars
+@24
+riscv_isa_sim.core0.vars.count_123[7:0]
+riscv_isa_sim.core0.vars.ecall_count[63:0]
+riscv_isa_sim.core0.vars.mei_count[31:0]
+riscv_isa_sim.core0.vars.msi_count[31:0]
+riscv_isa_sim.core0.vars.mti_count[31:0]
+riscv_isa_sim.core0.vars.timestamp[63:0]
+riscv_isa_sim.core0.vars.wakeup_count[63:0]
+@200
+-Interrupts
+@28
+riscv_isa_sim.core0.interrupts.mei
+riscv_isa_sim.core0.interrupts.msi
+riscv_isa_sim.core0.interrupts.mti
+@200
+-CSRs
+@24
+riscv_isa_sim.clint.mtime[63:0]
+riscv_isa_sim.clint.mtimecmp0[63:0]
+@22
+riscv_isa_sim.core0.csrs.mtvec[63:0]
+riscv_isa_sim.core0.csrs.mtval[63:0]
+riscv_isa_sim.core0.csrs.mie[63:0]
+@23
+riscv_isa_sim.core0.csrs.mstatus[63:0]
+@22
+riscv_isa_sim.core0.csrs.mip[63:0]
+@200
+-Processor
+@22
+riscv_isa_sim.core0.processor.jump_pc[63:0]
+riscv_isa_sim.core0.processor.pc[63:0]
+riscv_isa_sim.core0.processor.x1[63:0]
+riscv_isa_sim.core0.processor.x2[63:0]
+riscv_isa_sim.core0.processor.x3[63:0]
+[pattern_trace] 1
+[pattern_trace] 0

@@ -6,6 +6,7 @@ project(baremetal_startup_cxx CXX)
 
 # specify the C++ standard
 set(CMAKE_CXX_FLAGS "\
+  -march=${CMAKE_SYSTEM_PROCESSOR} \
   -std=c++17 \
   -Os \
   -g \
