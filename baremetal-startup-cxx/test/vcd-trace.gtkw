@@ -1,0 +1,136 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Fri Nov 18 12:33:22 2022
+[*]
+[dumpfile] "/home/five/five-embeddev-wsl/riscv-scratchpad-dev/baremetal-startup-cxx/test/vcd-trace.vcd"
+[dumpfile_mtime] "Fri Nov 18 12:27:21 2022"
+[dumpfile_size] 33170746
+[savefile] "/home/five/five-embeddev-wsl/riscv-scratchpad-dev/baremetal-startup-cxx/test/vcd-trace.gtkw"
+[timestart] 297
+[size] 1920 974
+[pos] 32 32
+*-5.297659 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] riscv_isa_sim.
+[treeopen] riscv_isa_sim.core0.
+[sst_width] 276
+[signals_width] 477
+[sst_expanded] 1
+[sst_vpaned_height] 541
+@200
+-Global Vars
+-Interrupts
+@28
+riscv_isa_sim.core0.interrupts.mei
+riscv_isa_sim.core0.interrupts.msi
+riscv_isa_sim.core0.interrupts.mti
+@200
+-CSRs
+@24
+riscv_isa_sim.clint.mtime[63:0]
+riscv_isa_sim.clint.mtimecmp0[63:0]
+@22
+riscv_isa_sim.core0.csrs.mtvec[63:0]
+riscv_isa_sim.core0.csrs.mtval[63:0]
+riscv_isa_sim.core0.csrs.mie[63:0]
+riscv_isa_sim.core0.csrs.mstatus[63:0]
+riscv_isa_sim.core0.csrs.mip[63:0]
+riscv_isa_sim.core0.csrs.mepc[63:0]
+@200
+-Processor
+@800022
+riscv_isa_sim.core0.processor.jump_pc[63:0]
+@c00022
+#{riscv_isa_sim.core0.processor.jump_pc[31:0]} (32)riscv_isa_sim.core0.processor.jump_pc[63:0] (33)riscv_isa_sim.core0.processor.jump_pc[63:0] (34)riscv_isa_sim.core0.processor.jump_pc[63:0] (35)riscv_isa_sim.core0.processor.jump_pc[63:0] (36)riscv_isa_sim.core0.processor.jump_pc[63:0] (37)riscv_isa_sim.core0.processor.jump_pc[63:0] (38)riscv_isa_sim.core0.processor.jump_pc[63:0] (39)riscv_isa_sim.core0.processor.jump_pc[63:0] (40)riscv_isa_sim.core0.processor.jump_pc[63:0] (41)riscv_isa_sim.core0.processor.jump_pc[63:0] (42)riscv_isa_sim.core0.processor.jump_pc[63:0] (43)riscv_isa_sim.core0.processor.jump_pc[63:0] (44)riscv_isa_sim.core0.processor.jump_pc[63:0] (45)riscv_isa_sim.core0.processor.jump_pc[63:0] (46)riscv_isa_sim.core0.processor.jump_pc[63:0] (47)riscv_isa_sim.core0.processor.jump_pc[63:0] (48)riscv_isa_sim.core0.processor.jump_pc[63:0] (49)riscv_isa_sim.core0.processor.jump_pc[63:0] (50)riscv_isa_sim.core0.processor.jump_pc[63:0] (51)riscv_isa_sim.core0.processor.jump_pc[63:0] (52)riscv_isa_sim.core0.processor.jump_pc[63:0] (53)riscv_isa_sim.core0.processor.jump_pc[63:0] (54)riscv_isa_sim.core0.processor.jump_pc[63:0] (55)riscv_isa_sim.core0.processor.jump_pc[63:0] (56)riscv_isa_sim.core0.processor.jump_pc[63:0] (57)riscv_isa_sim.core0.processor.jump_pc[63:0] (58)riscv_isa_sim.core0.processor.jump_pc[63:0] (59)riscv_isa_sim.core0.processor.jump_pc[63:0] (60)riscv_isa_sim.core0.processor.jump_pc[63:0] (61)riscv_isa_sim.core0.processor.jump_pc[63:0] (62)riscv_isa_sim.core0.processor.jump_pc[63:0] (63)riscv_isa_sim.core0.processor.jump_pc[63:0]
+@28
+(32)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(33)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(34)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(35)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(36)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(37)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(38)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(39)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(40)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(41)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(42)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(43)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(44)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(45)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(46)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(47)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(48)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(49)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(50)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(51)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(52)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(53)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(54)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(55)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(56)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(57)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(58)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(59)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(60)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(61)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(62)riscv_isa_sim.core0.processor.jump_pc[63:0]
+(63)riscv_isa_sim.core0.processor.jump_pc[63:0]
+@1401200
+-group_end
+@1001200
+-group_end
+@22
+riscv_isa_sim.core0.processor.pc[63:0]
++{x1/ra} riscv_isa_sim.core0.processor.x1[63:0]
++{x2/sp} riscv_isa_sim.core0.processor.x2[63:0]
++{x3/gp} riscv_isa_sim.core0.processor.x3[63:0]
+@200
+-Variabls
+@22
+riscv_isa_sim.core0.vars._ZL9timestamp[63:0]
+riscv_isa_sim.core0.vars._ZL22global_value_with_init[31:0]
+@23
+riscv_isa_sim.core0.vars._ZL24global_bool_keep_running[7:0]
+@28
+riscv_isa_sim.core0.vars._ZL26global_f32_value_with_init
+riscv_isa_sim.core0.vars._ZL26global_f64_value_with_init
+@22
+riscv_isa_sim.core0.vars._ZL26global_u8a_value_with_init[7:0]
+riscv_isa_sim.core0.vars._ZL26global_u8b_value_with_init[7:0]
+riscv_isa_sim.core0.vars._ZL26global_u8c_value_with_init[7:0]
+riscv_isa_sim.core0.vars._ZL26global_u8d_value_with_init[7:0]
+riscv_isa_sim.core0.vars._ZL26global_u16_value_with_init[15:0]
+riscv_isa_sim.core0.vars._ZL26global_u32_value_with_init[31:0]
+riscv_isa_sim.core0.vars._ZL26global_u64_value_with_init[63:0]
+riscv_isa_sim.core0.vars._ZL30global_value1_with_constructor[31:0]
+riscv_isa_sim.core0.vars._ZL30global_value2_with_constructor[31:0]
+@200
+-Bus
+@22
+riscv_isa_sim.core0.bus.addr[63:0]
+riscv_isa_sim.core0.bus.rd_data[63:0]
+@28
+riscv_isa_sim.core0.bus.rd_strobe
+@22
+riscv_isa_sim.core0.bus.size[7:0]
+riscv_isa_sim.core0.bus.wr_data[63:0]
+@28
+riscv_isa_sim.core0.bus.wr_strobe
+@200
+-Regs - Args
+@22
+riscv_isa_sim.core0.processor.x4[63:0]
+riscv_isa_sim.core0.processor.x5[63:0]
+riscv_isa_sim.core0.processor.x6[63:0]
+riscv_isa_sim.core0.processor.x7[63:0]
+riscv_isa_sim.core0.processor.x8[63:0]
+riscv_isa_sim.core0.processor.x9[63:0]
+riscv_isa_sim.core0.processor.x10[63:0]
+riscv_isa_sim.core0.processor.x11[63:0]
+riscv_isa_sim.core0.processor.x12[63:0]
+riscv_isa_sim.core0.processor.x13[63:0]
+riscv_isa_sim.core0.processor.x14[63:0]
+riscv_isa_sim.core0.processor.x15[63:0]
+riscv_isa_sim.core0.processor.x16[63:0]
+riscv_isa_sim.core0.processor.x17[63:0]
+[pattern_trace] 1
+[pattern_trace] 0

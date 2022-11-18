@@ -19,13 +19,51 @@
 #include "timer.hpp"
 
 // Machine mode interrupt service routine
-static void irq_entry(void) __attribute__ ((interrupt ("machine")));
+static void irq_entry(void) noexcept __attribute__ ((interrupt ("machine")));
 
 // Timer driver 
 static driver::timer<> mtimer;
 
 // Global to hold current timestamp
 static volatile uint64_t timestamp{0};
+
+// Class to perform constructor/destructor before main()
+template<uint32_t V>
+class TestStaticConstructDestruct {
+public:
+    TestStaticConstructDestruct(unsigned int &v) 
+        : _v(v) {
+        _v |= V;
+    }
+    ~TestStaticConstructDestruct() {
+        _v &= ~V;
+    }
+private:
+    unsigned int &_v;
+};
+
+// Values for tracing and observing initialization
+static int global_value_with_init = 42;
+static uint32_t global_u32_value_with_init{0xa1a2a3a4ul};
+static uint64_t global_u64_value_with_init{0xb1b2b3b4b5b6b7b8ull};
+static float    global_f32_value_with_init{3.14};
+static double   global_f64_value_with_init{1.44};
+static uint16_t global_u16_value_with_init{0x1234};
+static uint8_t  global_u8a_value_with_init{0x42};
+static uint8_t  global_u8b_value_with_init{0x43};
+static uint8_t  global_u8c_value_with_init{0x44};
+static uint8_t  global_u8d_value_with_init{0x45};
+static volatile bool global_bool_keep_running{true};
+
+// Values to observe contructor/destructor changes
+static unsigned int global_value1_with_constructor = 1;
+static unsigned int global_value2_with_constructor = 2;
+
+// Constructors and destructors
+static TestStaticConstructDestruct<0x200> constructor_destructor_1(global_value1_with_constructor);
+static TestStaticConstructDestruct<0x200> constructor_destructor_2(global_value2_with_constructor);
+static TestStaticConstructDestruct<0x100000> constructor_destructor_3{global_value2_with_constructor};
+static TestStaticConstructDestruct<0x100000> constructor_destructor_4{global_value1_with_constructor};
 
 int main(void) {
     // Global interrupt disable
@@ -42,10 +80,25 @@ int main(void) {
     // Global interrupt enable
     riscv::csrs.mstatus.mie.set();
 
+    // Increment for testing
+    global_u8c_value_with_init++;
+    global_u32_value_with_init++;
+    global_u64_value_with_init++;
+    global_f32_value_with_init++;
+    global_u8b_value_with_init++;
+    global_f64_value_with_init++;
+    global_u8d_value_with_init++;
+    global_u16_value_with_init++;
+    global_u8a_value_with_init++;
+
     // Busy loop
     do {
         __asm__ volatile ("wfi");  
-    } while (true);
+        global_value_with_init++;
+    } while (global_bool_keep_running);
+
+    // Global interrupt disable
+    riscv::csrs.mstatus.mie.clr();
     
     return 0;
 }

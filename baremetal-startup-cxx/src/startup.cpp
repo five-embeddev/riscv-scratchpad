@@ -10,28 +10,31 @@
 #include <cstdint>
 
 // Generic C function pointer.
-typedef void (*function_t)();
+typedef void(*function_t)(void);
 
 // These symbols are defined by the linker script.
 // See linker.lds
-extern "C" std::uintptr_t metal_segment_bss_target_start;
-extern "C" std::uintptr_t metal_segment_bss_target_end;
-extern "C" std::uintptr_t metal_segment_data_source_start;
-extern "C" std::uintptr_t metal_segment_data_target_start;
-extern "C" std::uintptr_t metal_segment_data_target_end;
-extern "C" std::uintptr_t metal_segment_itim_source_start;
-extern "C" std::uintptr_t metal_segment_itim_target_start;
-extern "C" std::uintptr_t metal_segment_itim_target_end;
+extern "C" std::uint8_t metal_segment_bss_target_start;
+extern "C" std::uint8_t metal_segment_bss_target_end;
+extern "C" std::uint8_t metal_segment_data_source_start;
+extern "C" std::uint8_t metal_segment_data_target_start;
+extern "C" std::uint8_t metal_segment_data_target_end;
+extern "C" std::uint8_t metal_segment_itim_source_start;
+extern "C" std::uint8_t metal_segment_itim_target_start;
+extern "C" std::uint8_t metal_segment_itim_target_end;
 
-extern "C" function_t __init_array_start[];
-extern "C" function_t __init_array_end[];
+extern "C" function_t __init_array_start;
+extern "C" function_t __init_array_end;
+extern "C" function_t __fini_array_start;
+extern "C" function_t __fini_array_end;
 
 // This function will be placed by the linker script according to the section
-extern "C" void _enter(void)  __attribute__ ((naked, section(".text.metal.init.enter")));
+extern "C" void _enter(void) noexcept __attribute__ ((naked, section(".text.metal.init.enter")));
 
 // Define the symbols with "C" naming as they are used by the assembler
-extern "C" void _start(void) __attribute__ ((noreturn));
-extern "C" void _Exit(int exit_code) __attribute__ ((noreturn));
+extern "C"  [[noreturn]] void _start(void) noexcept;
+// No inline is required so we can set a breakpoint on the function
+extern "C" [[noreturn]] void _Exit(int exit_code) noexcept __attribute__ ((noinline));
 
 // Standard entry point, no arguments.
 extern int main(void);
@@ -77,11 +80,19 @@ void _start(void) {
               &metal_segment_itim_target_start);
 
     // Call constructors
-    std::for_each( __init_array_start,
-                   __init_array_end, 
-                   [](const function_t pf) {pf();});
+    std::for_each( &__init_array_start,
+                   &__init_array_end, 
+                   [](function_t pf) {(pf)();});
+
     // Jump to main
     auto rc = main();
+
+    // Call destructors
+    std::for_each( &__fini_array_start,
+                   &__fini_array_end, 
+                   [](function_t pf) {(pf)();});
+
+
     // Don't expect to return, if so busy loop in the exit function.
     _Exit(rc);
 }

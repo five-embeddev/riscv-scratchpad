@@ -11,6 +11,9 @@ set(CMAKE_C_FLAGS "\
   -Os \
   -g \
   -Wall \
+  -Wextra \
+  -Wmissing-prototypes \
+  -Wstrict-prototypes \
   -ffunction-sections \
 ")
 set ( STACK_SIZE 0xf00 )
